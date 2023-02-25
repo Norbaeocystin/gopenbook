@@ -1,4 +1,4 @@
-module openBook
+module github.com/Norbaeocystin/gopenbook
 
 go 1.18
 

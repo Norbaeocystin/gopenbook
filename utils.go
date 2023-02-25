@@ -1,4 +1,4 @@
-package openbook
+package gopenbook
 
 import (
 	"context"
