@@ -1,1 +1,1 @@
-Few tools for interacting with serum and jup.ag api in golang 
+Few tools for interacting with openbook (serum fork) and jup.ag api in golang 
