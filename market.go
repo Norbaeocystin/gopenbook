@@ -29,6 +29,7 @@ type Market struct {
 	VaultSigner   solana.PublicKey
 }
 
+// initiliaze market struct with some data
 func NewMarket(address solana.PublicKey, client *rpc.Client) (Market, error) {
 	var market Market
 	market.Address = address
@@ -48,12 +49,14 @@ func NewMarket(address solana.PublicKey, client *rpc.Client) (Market, error) {
 	return market, nil
 }
 
+// fetch data amout serum/openbook market
 func (m *Market) FetchMarket() error {
 	market, err := serum.FetchMarket(context.TODO(), m.Client, m.Address)
 	m.Metadata = market.MarketV2
 	return err
 }
 
+// fetch decimals of tokens in market
 func (m *Market) Decimals() error {
 	// best way to use token.Mint - for fetching decimals data
 	accountBase, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.BaseMint)
@@ -70,6 +73,7 @@ func (m *Market) Decimals() error {
 	return nil
 }
 
+// loadbids
 func (m Market) LoadBids() {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Bids)
 	var orderbook serum.Orderbook
@@ -85,6 +89,7 @@ func (m Market) LoadBids() {
 	})
 }
 
+// load bids of owner
 func (m Market) LoadBidsForOwner(openOrderAccount solana.PublicKey) []*serum.SlabLeafNode {
 	info, _ := m.Client.GetAccountInfoWithOpts(context.TODO(), m.Metadata.Bids, &rpc.GetAccountInfoOpts{
 		Commitment: rpc.CommitmentProcessed,
@@ -104,6 +109,7 @@ func (m Market) LoadBidsForOwner(openOrderAccount solana.PublicKey) []*serum.Sla
 	return nodes
 }
 
+// load asks
 func (m Market) LoadAsks() {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Asks)
 	var orderbook serum.Orderbook
@@ -119,6 +125,7 @@ func (m Market) LoadAsks() {
 	})
 }
 
+// load asks of owner
 func (m Market) LoadAsksForOwner(openOrderAccount solana.PublicKey) []*serum.SlabLeafNode {
 	info, _ := m.Client.GetAccountInfoWithOpts(context.TODO(), m.Metadata.Asks, &rpc.GetAccountInfoOpts{
 		Commitment: rpc.CommitmentProcessed,
@@ -138,6 +145,7 @@ func (m Market) LoadAsksForOwner(openOrderAccount solana.PublicKey) []*serum.Sla
 	return nodes
 }
 
+// load N first bids
 func (m Market) LoadNBids(n int) []PriceAndQuantity {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Bids)
 	var orderbook serum.Orderbook
@@ -161,6 +169,7 @@ func (m Market) LoadNBids(n int) []PriceAndQuantity {
 	return prices
 }
 
+// load bid after sum of bids before
 func (m Market) LoadBidSumGTE(sum *big.Float) PriceAndQuantity {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Bids)
 	var orderbook serum.Orderbook
@@ -184,6 +193,7 @@ func (m Market) LoadBidSumGTE(sum *big.Float) PriceAndQuantity {
 	return priceAndQuantity
 }
 
+// load N first asks
 func (m Market) LoadNAsks(n int) []PriceAndQuantity {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Asks)
 	var orderbook serum.Orderbook
@@ -207,6 +217,7 @@ func (m Market) LoadNAsks(n int) []PriceAndQuantity {
 	return prices
 }
 
+// load ask after sum of asks before - to filet small ones
 func (m Market) LoadAskSumGTE(sum *big.Float) PriceAndQuantity {
 	info, _ := m.Client.GetAccountInfo(context.TODO(), m.Metadata.Asks)
 	var orderbook serum.Orderbook

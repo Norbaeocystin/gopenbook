@@ -9,6 +9,7 @@ import (
 	"log"
 )
 
+// find or create ata
 func FindOrCreateATA(client *rpc.Client, wallet solana.PrivateKey, mint solana.PublicKey) solana.PublicKey {
 	ataAccount, _, _ := solana.FindAssociatedTokenAddress(wallet.PublicKey(), mint)
 	tokens, err := client.GetTokenAccountsByOwner(context.TODO(), wallet.PublicKey(),

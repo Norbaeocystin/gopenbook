@@ -11,6 +11,7 @@ import (
 	"math/big"
 )
 
+// convert big.Int to bin.Uint128
 func BigIntToBinUint128(value *big.Int) (bin.Uint128, error) {
 	var returnValue bin.Uint128
 	bytes := value.Bytes()

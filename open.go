@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// open - sell and buy position in one tx
 func Open(sellPrice, buyPrice, amount uint64, market Market, openOrders, tokenOwnerBuyAddress, tokenOwnerSellAddress, feeDiscount solana.PublicKey, wallet solana.PrivateKey) (solana.Signature, error) {
 	serumgo.SetProgramID(solana.MustPublicKeyFromBase58(OpenBookAddress))
 	matchIx := serumgo.NewMatchOrdersInstruction(5,
@@ -122,7 +123,7 @@ func Open(sellPrice, buyPrice, amount uint64, market Market, openOrders, tokenOw
 	return sig, err
 }
 
-// if openbookaccount address does not exists
+// if openbookaccount address does not exists creates tx
 func OpenOpenBookAccount(client *rpc.Client, wallet solana.PrivateKey) (solana.Signature, error, solana.PublicKey) {
 	nw := solana.NewWallet()
 	i := system.NewCreateAccountInstruction(

@@ -9,6 +9,7 @@ import (
 	"log"
 )
 
+// Settle transaction
 func Settle(m Market, openOrders, tokenBaseAddress, tokenQuoteAddress solana.PublicKey, wallet solana.PrivateKey) (solana.Signature, error) {
 	i := serumgo.NewSettleFundsInstruction(
 		m.Address,

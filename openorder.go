@@ -9,6 +9,7 @@ import (
 	"github.com/gagliardetto/solana-go/rpc"
 )
 
+// get openbook address for openbook programid
 func GetOpenBookAddresses(client rpc.Client, owner solana.PublicKey) ([]solana.PublicKey, error) {
 	var results = []solana.PublicKey{}
 	filters := []rpc.RPCFilter{
@@ -40,6 +41,7 @@ func GetOpenBookAddresses(client rpc.Client, owner solana.PublicKey) ([]solana.P
 	return results, nil
 }
 
+// from publicKey to data in openorderaccount
 func GetOpenOrderDataForAccount(client *rpc.Client, openOrderAccount solana.PublicKey) serum.OpenOrders {
 	acc, _ := client.GetAccountInfo(context.TODO(), openOrderAccount)
 	var openBookData serum.OpenOrders
@@ -48,6 +50,7 @@ func GetOpenOrderDataForAccount(client *rpc.Client, openOrderAccount solana.Publ
 	return openBookData
 }
 
+// returns map of publickeys with openorderaccounts data
 func GetOpenOrdersDataForAccounts(client *rpc.Client, openOrderAccounts []solana.PublicKey) map[solana.PublicKey]serum.OpenOrders {
 	result := make(map[solana.PublicKey]serum.OpenOrders)
 	out, _ := client.GetMultipleAccounts(context.TODO(), openOrderAccounts...)
