@@ -50,8 +50,8 @@ func BigIntToBinUint128(value *big.Int) (bin.Uint128, error) {
 	return returnValue, nil
 }
 
-func GetBalance(client *rpc.Client, ownerAddressOfTokenToBePaid solana.PublicKey) (uint64, error) {
-	result, err := client.GetTokenAccountBalance(context.TODO(), ownerAddressOfTokenToBePaid, rpc.CommitmentSingleGossip)
+func GetBalance(client *rpc.Client, ataOwner solana.PublicKey) (uint64, error) {
+	result, err := client.GetTokenAccountBalance(context.TODO(), ataOwner, rpc.CommitmentSingleGossip)
 	if err != nil {
 		log.Println("fetching balance returned", err)
 		return 1, err
