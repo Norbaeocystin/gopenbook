@@ -7,9 +7,7 @@ import (
 	"log"
 )
 
-const RPCSOLANA = "https://cool-little-violet.solana-mainnet.quiknode.pro/963361dd2a6112fadf19c3751770bc7ddc004037/" // "https://solana--mainnet.datahub.figment.io/apikey/203248f56f764f388af63714614b32ef/"
-// "https://rough-lingering-sky.solana-mainnet.quiknode.pro/922d622b314acef30ddc2a27d59613d3d17dce60/"/
-// const RPCSOLANA = "https://api.mainnet-beta.solana.com"
+const RPCSOLANA = "https://api.mainnet-beta.solana.com"
 
 var Address2Name = map[string]string{
 	"9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin": "Serum Dex Program v3",
